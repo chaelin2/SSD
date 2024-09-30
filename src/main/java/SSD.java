@@ -56,6 +56,8 @@ public class SSD {
 
         public static void main(String[] args) throws IOException {
             BufferedReader br = new BufferedReader(new FileReader("nand.txt"));
+            SSD sd = new SSD();
+
         }
 
     }
