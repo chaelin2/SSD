@@ -1,17 +1,15 @@
 import java.io.*;
 
 public class SSD {
-    static File fileWrite = new File("result.txt");
+    static String[] LBAarr = new String[100];
 
-    // write면 lineNum = 1, fullwrite면 lineNum = 100
-    static void writeResult(String line, int lineNum){
+    //result.txt 초기화
+    static void initResult(){
+        File fileWrite = new File("result.txt");
         try{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileWrite));
             if(fileWrite.canWrite()){
-                for(int i = 0; i < lineNum; i++) {
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
-                }
+                bufferedWriter.write("");
                 bufferedWriter.close();
             }
         }catch (IOException e){
@@ -19,6 +17,31 @@ public class SSD {
         }
     }
 
+    // ssd read LBA -> result.txt 출력
+    static void readNand(int index){
+        File fileWrite = new File("result.txt");
+        File fileRead = new File("nand.txt");
+        try{
+            //nand.txt 읽어서 LBAarr에 저장.
+            BufferedReader br = new BufferedReader(new FileReader(fileRead));
+            String line = "";
+            int lineIndex = 0;
+            while((line = br.readLine()) != null){
+                LBAarr[lineIndex] = line;
+                lineIndex++;
+            }
+
+            //LBAarr에서 index 값 result.txt에 출력
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileWrite, true));
+            if(fileWrite.canWrite()){
+                bufferedWriter.write(LBAarr[index]);
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+            }
+        }catch (IOException e){
+            System.out.println("cannot read");
+        }
+    }
 
 
         public static void main(String[] args) throws IOException {
@@ -51,6 +74,7 @@ public class SSD {
             } catch (IOException e) {
                 System.err.println("파일을 읽는 동안 오류가 발생했습니다: " + e.getMessage());
             }
+
         }
 
     }
