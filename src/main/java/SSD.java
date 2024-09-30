@@ -14,7 +14,7 @@ public class SSD {
         }
     }
     //result.txt 초기화
-    static void initResult(){
+    public void initResult(){
         File fileWrite = new File("result.txt");
         try{
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileWrite));
@@ -26,9 +26,11 @@ public class SSD {
             System.out.println("cannot write result.txt");
         }
     }
-
+    public void writeValue(int index, String a){
+        System.out.println("hello");
+    }
     // ssd read LBA -> result.txt 출력
-    static void readNand(int index){
+    public void readNand(int index){
         File fileWrite = new File("result.txt");
         File fileRead = new File("nand.txt");
         try{
@@ -54,10 +56,16 @@ public class SSD {
     }
 
 
-        public static void main(String[] args) throws IOException {
-            BufferedReader br = new BufferedReader(new FileReader("nand.txt"));
-            SSD sd = new SSD();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("nand.txt"));
+        SSD sd = new SSD();
+        int index = Integer.parseInt(args[1]);
+        if(args.length == 3) {
 
+            sd.writeValue(index, args[2]);
+        } else {
+            sd.readNand(index);
         }
-
     }
+
+}
