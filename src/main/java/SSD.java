@@ -65,9 +65,17 @@ public class SSD {
 
     public static void main(String[] args) throws IOException {
         SSD sd = new SSD();
-        int index = Integer.parseInt(args[1]);
+        int index = 0;
+        if(args.length>=2){
+            index = Integer.parseInt(args[1]);
+        }
         if(args.length == 3) {
             sd.writeValue(index, args[2]);
+        } else if (args[0].equals("fullread")) {
+            sd.initResult();
+            for(int i = 0; i < 100; i++){
+                sd.readNand(i);
+            }
         } else {
             sd.initResult();
             sd.readNand(index);
